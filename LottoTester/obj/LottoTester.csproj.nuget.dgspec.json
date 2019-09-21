@@ -1,0 +1,63 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\Zac\\source\\repos\\LottoTester\\LottoTester\\LottoTester.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\Zac\\source\\repos\\LottoTester\\LottoTester\\LottoTester.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Zac\\source\\repos\\LottoTester\\LottoTester\\LottoTester.csproj",
+        "projectName": "LottoTester",
+        "projectPath": "C:\\Users\\Zac\\source\\repos\\LottoTester\\LottoTester\\LottoTester.csproj",
+        "packagesPath": "C:\\Users\\Zac\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Zac\\source\\repos\\LottoTester\\LottoTester\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Zac\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp2.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp2.1": {
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp2.1": {
+          "dependencies": {
+            "Microsoft.NETCore.App": {
+              "target": "Package",
+              "version": "[2.1.0, )",
+              "autoReferenced": true
+            },
+            "Troschuetz.Random": {
+              "target": "Package",
+              "version": "[4.3.1, )"
+            }
+          },
+          "imports": [
+            "net461"
+          ],
+          "assetTargetFallback": true,
+          "warn": true
+        }
+      }
+    }
+  }
+}

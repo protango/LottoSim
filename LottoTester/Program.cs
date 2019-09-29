@@ -1,80 +1,114 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
+using LottoTester.Extensions;
 
 namespace LottoTester
 {
-    class Program
+    public class Program
     {
-        private static Random rng = new Random();
+        const int TRIALS = 10000000;
+        const int STDGAMESIZE = 12;
+        private static ConcurrentRandom rng = new ConcurrentRandom();
         static void Main(string[] args)
         {
-            Console.ReadLine();
-            Random rng = new Random();
+            int[] numbers = new int[6], supps = new int[2];
+            Func<int[][]>[] strategies = new Func<int[][]>[] {
+                GenPickStatic, GenPickRandom, GenPickBigGame
+            };
+            GenPickStatic();
 
-            Stopwatch sw = new Stopwatch();
-            sw.Stop();
-            Console.WriteLine($"{sw.ElapsedMilliseconds}ms");
-        }
+            ConcurrentDictionary<int, int>[] divResults = new ConcurrentDictionary<int, int>[strategies.Length];
+            for (int i = 0; i < strategies.Length; i++) {
+                divResults[i] = new ConcurrentDictionary<int, int>();
+                for (int j = 1; j <= 6; j++) divResults[i].TryAdd(j, 0);
+            }
 
-        static void LottoStatic(string[] args)
-        {
-            /*const ulong draws = 100000000; // 1 billion tries
-            ulong nextScreenUpdate = draws / 100;
-            int winCount = 0;
-            int[] draw = new int[6];
-            int[] pick = new int[6];
-            for (int j = 0; j < pick.Length; j++) pick[j] = GetUniqueRandom(1, 45, pick);
+            var rangePartitioner = Partitioner.Create(0, TRIALS);
+            Parallel.ForEach(rangePartitioner, range => {
+                for (int trial = range.Item1; trial < range.Item2; trial++) {
+                    List<int> rawNumbers = rng.NextUniqueInts(8, 1, 46).ToList();
+                    var supIdxs = rng.NextUniqueInts(2, 0, 8).ToArray();
+                    for (int i = 0; i < supIdxs.Length; i++)
+                    {
+                        supps[i] = rawNumbers[supIdxs[i] - i];
+                        rawNumbers.RemoveAt(supIdxs[i] - i);
+                    }
+                    rawNumbers.CopyTo(numbers, 0);
 
-            for (ulong i = 0; i < draws; i++)
-            {
-                for (int j = 0; j < draw.Length; j++)
-                    draw[j] = GetUniqueRandom(1, 45, draw);
-                if (pick.All(x => draw.Contains(x))) winCount++;
-                for (int j = 0; j < draw.Length; j++) draw[j] = 0;
-                if (i == nextScreenUpdate)
-                {
-                    Console.Clear();
-                    Console.WriteLine($"{i * 100 / draws}%");
-                    nextScreenUpdate += draws / 100;
+                    for (int i = 0; i < strategies.Length; i++)
+                    {
+                        var res = CalcDivision(numbers, supps, strategies[i]());
+                        foreach (int r in res)
+                            divResults[i][r]++;
+                    }
                 }
-            }
+            });
 
-            Console.WriteLine($"STATIC: We won {winCount} times!");*/
+            for (int i = 0; i < strategies.Length; i++)
+            {
+                Console.WriteLine($"Strategy {i} Results:");
+                Console.WriteLine(string.Join(" | ", divResults[i].Keys.Select(x => x.ToString().PadRight(10))));
+                Console.WriteLine(string.Join(" | ", divResults[i].Values.Select(x => x.ToString().PadRight(10))));
+            }
         }
 
-        static int[] DrawLotto()
+        private static int[][] staticPicks = new int[0][];
+        private static int[][] GenPickStatic() 
         {
-            const int numbers = 6;
-            const int max = 45;
-            int[] result = new int[numbers];
-
-            for (int resultCursor = 0; resultCursor < result.Length; resultCursor++)
+            if (staticPicks.Length > STDGAMESIZE)
             {
-                int num = rng.Next(max - resultCursor);
-
-                for (int checkCursor = 0; checkCursor < resultCursor; checkCursor++) {
-                    if (num >= result[checkCursor]) num++;
-                }
-
-                result[resultCursor] = num;
-
+                staticPicks = staticPicks.Take(STDGAMESIZE).ToArray();
             }
-            return result;
+            else if (staticPicks.Length < STDGAMESIZE)
+            {
+                Random staticRng = new Random(10);
+                staticPicks = new int[STDGAMESIZE][];
+                for (int i = 0; i < staticPicks.Length; i++)
+                    staticPicks[i] = staticRng.NextUniqueInts(6, 1, 46).ToArray();
+            }
+            return staticPicks;
         }
 
-        static int[] GetUniqueRandom(int numbers, int max) {
-            int[] result = new int[numbers];
-            int num;
-            for (int j = 0; j < result.Length; j++)
-            {
-                do num = rng.Next(max) + 1;
-                while (result.Contains(num));
-                result[j] = num;
+        private static int[][] GenPickRandom()
+        {
+            int[][] picks = new int[STDGAMESIZE][];
+            for (int i = 0; i < picks.Length; i++) 
+                picks[i] = rng.NextUniqueInts(6, 1, 46).ToArray();
+            return picks;
+        }
+
+        static bool firstRun = true;
+        private static int[][] GenPickBigGame()
+        {
+            if (!firstRun) {
+                return new int[0][];
             }
-            return result;
+            firstRun = false;
+            int[][] picks = new int[STDGAMESIZE * TRIALS][];
+            for (int i = 0; i < picks.Length; i++)
+                picks[i] = rng.NextUniqueInts(6, 1, 46).ToArray();
+            return picks;
+        }
+
+        private static int[] CalcDivision(int[] numbers, int[] supps, int[][] picks)
+        {
+            List<int> result = new List<int>();
+            foreach (var pick in picks) {
+                int numCnt = pick.Count(x => numbers.Contains(x));
+                int supCnt = pick.Count(x => supps.Contains(x));
+                if ((numCnt == 1 || numCnt == 2) && supCnt == 2) result.Add(6);
+                else if (numCnt == 3 && supCnt >= 1) result.Add(5);
+                else if (numCnt == 4) result.Add(4);
+                else if (numCnt == 5 && supCnt == 0) result.Add(3);
+                else if (numCnt == 5 && supCnt == 1) result.Add(2);
+                else if (numCnt == 6) result.Add(1);
+            }
+            return result.ToArray();
         }
     }
 }

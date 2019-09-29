@@ -1,5 +1,4 @@
 C:\Users\Zac\source\repos\LottoTester\LottoTesterTests\obj\Debug\netcoreapp2.1\LottoTesterTests.csprojAssemblyReference.cache
-C:\Users\Zac\source\repos\LottoTester\LottoTesterTests\obj\Debug\netcoreapp2.1\LottoTesterTests.csproj.CoreCompileInputs.cache
 C:\Users\Zac\source\repos\LottoTester\LottoTesterTests\obj\Debug\netcoreapp2.1\LottoTesterTests.AssemblyInfoInputs.cache
 C:\Users\Zac\source\repos\LottoTester\LottoTesterTests\obj\Debug\netcoreapp2.1\LottoTesterTests.AssemblyInfo.cs
 C:\Users\Zac\source\repos\LottoTester\LottoTesterTests\bin\Debug\netcoreapp2.1\Microsoft.VisualStudio.TestPlatform.MSTest.TestAdapter.dll

@@ -4,7 +4,6 @@ C:\Users\Zac\source\repos\LottoTester\LottoTester\bin\Debug\netcoreapp2.1\LottoT
 C:\Users\Zac\source\repos\LottoTester\LottoTester\bin\Debug\netcoreapp2.1\LottoTester.dll
 C:\Users\Zac\source\repos\LottoTester\LottoTester\bin\Debug\netcoreapp2.1\LottoTester.pdb
 C:\Users\Zac\source\repos\LottoTester\LottoTester\obj\Debug\netcoreapp2.1\LottoTester.csprojAssemblyReference.cache
-C:\Users\Zac\source\repos\LottoTester\LottoTester\obj\Debug\netcoreapp2.1\LottoTester.csproj.CoreCompileInputs.cache
 C:\Users\Zac\source\repos\LottoTester\LottoTester\obj\Debug\netcoreapp2.1\LottoTester.AssemblyInfoInputs.cache
 C:\Users\Zac\source\repos\LottoTester\LottoTester\obj\Debug\netcoreapp2.1\LottoTester.AssemblyInfo.cs
 C:\Users\Zac\source\repos\LottoTester\LottoTester\obj\Debug\netcoreapp2.1\LottoTester.dll

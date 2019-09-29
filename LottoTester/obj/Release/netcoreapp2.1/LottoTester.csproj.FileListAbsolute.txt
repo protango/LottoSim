@@ -1,0 +1,10 @@
+C:\Users\Zac\source\repos\LottoTester\LottoTester\bin\Release\netcoreapp2.1\LottoTester.deps.json
+C:\Users\Zac\source\repos\LottoTester\LottoTester\bin\Release\netcoreapp2.1\LottoTester.runtimeconfig.json
+C:\Users\Zac\source\repos\LottoTester\LottoTester\bin\Release\netcoreapp2.1\LottoTester.runtimeconfig.dev.json
+C:\Users\Zac\source\repos\LottoTester\LottoTester\bin\Release\netcoreapp2.1\LottoTester.dll
+C:\Users\Zac\source\repos\LottoTester\LottoTester\bin\Release\netcoreapp2.1\LottoTester.pdb
+C:\Users\Zac\source\repos\LottoTester\LottoTester\obj\Release\netcoreapp2.1\LottoTester.csprojAssemblyReference.cache
+C:\Users\Zac\source\repos\LottoTester\LottoTester\obj\Release\netcoreapp2.1\LottoTester.AssemblyInfoInputs.cache
+C:\Users\Zac\source\repos\LottoTester\LottoTester\obj\Release\netcoreapp2.1\LottoTester.AssemblyInfo.cs
+C:\Users\Zac\source\repos\LottoTester\LottoTester\obj\Release\netcoreapp2.1\LottoTester.dll
+C:\Users\Zac\source\repos\LottoTester\LottoTester\obj\Release\netcoreapp2.1\LottoTester.pdb

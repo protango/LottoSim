@@ -19,7 +19,7 @@ namespace LottoTesterTests.Extensions
             int min = 1;
             int max = 46;
             int count = 8;
-            TRandom rng = new TRandom();
+            Random rng = new Random();
 
             // Act
             IEnumerable<int> result = rng.NextUniqueInts(count, min, max);
@@ -43,15 +43,15 @@ namespace LottoTesterTests.Extensions
             int tests = 100;
 
             // Act
-            TRandom rng = new TRandom(seed1);
+            Random rng = new Random(seed1);
             IEnumerable<int> result1 = rng.NextUniqueInts(count, min, max);
-            rng = new TRandom(seed1);
+            rng = new Random(seed1);
             IEnumerable<int> result1_again = rng.NextUniqueInts(count, min, max);
 
-            rng = new TRandom(seed2);
+            rng = new Random(seed2);
             IEnumerable<int> result2 = rng.NextUniqueInts(count, min, max);
 
-            rng = new TRandom(seed1);
+            rng = new Random(seed1);
             string[] results = new string[tests];
             for (int i = 0; i < tests; i++) {
                 results[i] = string.Join(',', rng.NextUniqueInts(count, min, max).ToArray());

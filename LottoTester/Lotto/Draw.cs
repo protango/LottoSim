@@ -11,7 +11,8 @@ namespace LottoTester.Lotto
     {
         private const double gameCntMean = 7742577.6;
         private const double gameCntStDev = 1404830.011;
-        private static TRandom rng = new TRandom();
+        private static TRandom trng = new TRandom();
+        private static Random rng = new Random();
 
         /// <summary>
         /// The total division 1 prize pool in dollars for this draw
@@ -32,7 +33,7 @@ namespace LottoTester.Lotto
         }
 
         public void DoDraw() {
-            int gamesPlayed = (int)Math.Round(rng.Normal(gameCntMean, gameCntStDev));
+            int gamesPlayed = (int)Math.Round(trng.Normal(gameCntMean, gameCntStDev));
             int[] nums = rng.NextUniqueInts(8, 1, 46).ToArray();
             int[] winNums = nums.Take(6).ToArray();
             int[] supNums = nums.TakeLast(2).ToArray();
